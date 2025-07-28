@@ -3,15 +3,14 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
+  console.log(
+    `[DEPURAÇÃO] Valor de JWT_SECRET no processo: ${process.env.JWT_SECRET}`,
+  );
+
   const app = await NestFactory.create(AppModule);
 
-  // Habilita o CORS para que o frontend em React possa acessar a API
   app.enableCors();
-
-  // >>>>> VERIFIQUE SE ESTA LINHA EXISTE! <<<<<
   app.setGlobalPrefix('api');
-
-  // Usa o ValidationPipe globalmente para validar os DTOs
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -24,4 +23,4 @@ async function bootstrap() {
   await app.listen(port);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
-bootstrap();
+void bootstrap();

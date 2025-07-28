@@ -1,5 +1,3 @@
-// src/scouts/data/initial-scouts.data.ts
-
 export const initialScouts = [
   { id: 1, name: 'Harry Potter' },
   { id: 2, name: 'Hermione Granger' },

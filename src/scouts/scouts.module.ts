@@ -5,7 +5,7 @@ import { ScoutsController } from './scouts.controller';
 import { ScoutsService } from './scouts.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Scout])], // Adicione esta linha
+  imports: [TypeOrmModule.forFeature([Scout])],
   controllers: [ScoutsController],
   providers: [ScoutsService],
 })

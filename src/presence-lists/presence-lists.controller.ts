@@ -16,7 +16,6 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 export class PresenceListsController {
   constructor(private readonly presenceListsService: PresenceListsService) {}
 
-  // MUDANÇA AQUI:
   @Post('confirmar')
   confirmPresence(@Body() confirmPresenceDto: ConfirmPresenceDto) {
     return this.presenceListsService.confirmPresence(confirmPresenceDto);

@@ -19,7 +19,6 @@ export class PresenceListsService {
   ): Promise<PresenceList> {
     const { scoutIds } = confirmPresenceDto;
 
-    // Busca no banco todos os escoteiros com os IDs fornecidos
     const scouts = await this.scoutRepository.findBy({
       id: In(scoutIds),
     });
@@ -38,9 +37,8 @@ export class PresenceListsService {
   }
 
   findAll(): Promise<PresenceList[]> {
-    // Retorna as listas da mais recente para a mais antiga
     return this.presenceListRepository.find({
-      relations: ['confirmedScouts'], // Inclui os dados dos escoteiros na resposta
+      relations: ['confirmedScouts'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -48,7 +46,7 @@ export class PresenceListsService {
   async findOne(id: number): Promise<PresenceList> {
     const list = await this.presenceListRepository.findOne({
       where: { id },
-      relations: ['confirmedScouts'], // Inclui os dados dos escoteiros
+      relations: ['confirmedScouts'],
     });
 
     if (!list) {

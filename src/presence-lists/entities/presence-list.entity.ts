@@ -12,13 +12,12 @@ export class PresenceList {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @CreateDateColumn() // Salva automaticamente a data e hora da criação
+  @CreateDateColumn()
   createdAt: Date;
 
-  // Define a relação Muitos-para-Muitos
   @ManyToMany(() => Scout)
   @JoinTable({
-    name: 'presence_list_scouts', // Nome da tabela de junção que será criada
+    name: 'presence_list_scouts',
     joinColumn: { name: 'presence_list_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'scout_id', referencedColumnName: 'id' },
   })

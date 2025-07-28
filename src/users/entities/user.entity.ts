@@ -5,20 +5,20 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity('users') // Diz ao TypeORM que esta classe é uma tabela chamada 'users'
+@Entity('users')
 export class User {
-  @PrimaryGeneratedColumn() // Define 'id' como a chave primária auto-incrementada
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @Column({ unique: true }) // Define uma coluna 'email' que deve ser única
+  @Column({ unique: true })
   email: string;
 
-  @Column() // Define uma coluna 'password'
+  @Column()
   password: string;
 
-  @CreateDateColumn() // Define uma coluna que salva a data de criação automaticamente
+  @CreateDateColumn()
   createdAt: Date;
 }

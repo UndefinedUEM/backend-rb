@@ -6,7 +6,7 @@ import { PresenceListsService } from './presence-lists.service';
 import { Scout } from '../scouts/entities/scout.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PresenceList, Scout])], // Adicione as duas entidades
+  imports: [TypeOrmModule.forFeature([PresenceList, Scout])],
   controllers: [PresenceListsController],
   providers: [PresenceListsService],
 })

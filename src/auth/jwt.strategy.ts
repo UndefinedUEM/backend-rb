@@ -10,10 +10,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
   ) {
-    // AQUI ESTÁ A CORREÇÃO:
     const secret = configService.get<string>('JWT_SECRET');
 
-    // Adicionamos uma verificação para falhar com uma mensagem clara
     if (!secret) {
       throw new Error(
         'Segredo JWT (JWT_SECRET) não foi encontrado. Verifique seu arquivo .env',
@@ -23,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: secret, // Agora temos certeza que 'secret' é uma string
+      secretOrKey: secret,
     });
   }
 

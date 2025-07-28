@@ -15,9 +15,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  // Lógica de Cadastro (Sign Up)
   async signUp(createUserDto: CreateUserDto) {
-    // Verifica se o e-mail já existe
     const existingUser = await this.usersService.findOneByEmail(
       createUserDto.email,
     );
@@ -27,17 +25,14 @@ export class AuthService {
 
     const user = await this.usersService.create(createUserDto);
 
-    // Nunca retorne a senha, mesmo que criptografada
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = user;
     return result;
   }
 
-  // Lógica de Login (Sign In)
   async signIn(email: string, pass: string): Promise<{ access_token: string }> {
     const user = await this.usersService.findOneByEmail(email);
 
-    // Verifica se o usuário existe e se a senha está correta
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
@@ -48,7 +43,6 @@ export class AuthService {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
 
-    // Se tudo estiver certo, gera e retorna o token JWT
     const payload = { name: user.name, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
