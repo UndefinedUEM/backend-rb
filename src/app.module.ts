@@ -14,14 +14,12 @@ import { PresenceList } from './presence-lists/entities/presence-list.entity';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [User, Scout, PresenceList],
       synchronize: true,
     }),
-
     AuthModule,
     UsersModule,
     ScoutsModule,
