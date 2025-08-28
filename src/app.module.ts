@@ -21,7 +21,7 @@ import { PresenceList } from './presence-lists/entities/presence-list.entity';
         type: 'postgres',
         url: configService.get<string>(
           'postgresql://banco_escoteiros_user:YkbxU9HI5Bt0FzJHDlw5R6ndLQXJaakB@dpg-d2o5n1ggjchc73f68ob0-a/banco_escoteiros',
-        ), // Lê a URL do ambiente
+        ),
         entities: [User, Scout, PresenceList],
         synchronize: true,
         ssl: {
