@@ -1,14 +1,14 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AccessCodeService } from './access-code.service';
-import { VerifyCodeDto } from './dto/access-code.dto';
+import { VerifyCodeDto, RequestCodeDto } from './dto/access-code.dto';
 
 @Controller('access-code')
 export class AccessCodeController {
   constructor(private readonly accessCodeService: AccessCodeService) {}
 
   @Post('request')
-  requestCode() {
-    return this.accessCodeService.generateAndStoreCode();
+  requestCode(@Body() requestCodeDto: RequestCodeDto) {
+    return this.accessCodeService.generateAndStoreCode(requestCodeDto);
   }
 
   @Post('verify')

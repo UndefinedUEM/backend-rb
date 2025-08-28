@@ -6,7 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
-import { VerifyCodeDto } from './dto/access-code.dto';
+import { RequestCodeDto, VerifyCodeDto } from './dto/access-code.dto';
 
 @Injectable()
 export class AccessCodeService {
@@ -27,38 +27,42 @@ export class AccessCodeService {
     this.resend = new Resend(resendApiKey);
   }
 
-  async generateAndStoreCode(): Promise<{ message: string }> {
+  async generateAndStoreCode(
+    requestCodeDto: RequestCodeDto,
+  ): Promise<{ message: string }> {
+    const { email } = requestCodeDto;
+
+    const allowedEmailsString = this.configService.get<string>('EMAIL_TO');
+    if (!allowedEmailsString) {
+      console.error('EMAIL_TO não configurado.');
+      throw new InternalServerErrorException(
+        'A lista de e-mails permitidos não está configurada.',
+      );
+    }
+
+    const allowedEmails = allowedEmailsString.split(',').map((e) => e.trim());
+
+    if (!allowedEmails.includes(email)) {
+      throw new UnauthorizedException(
+        'Este e-mail não tem permissão para acessar o sistema.',
+      );
+    }
+
     const code = Math.floor(1000 + Math.random() * 9000).toString();
     this.accessCode = code;
 
     this.codeExpiration = new Date();
     this.codeExpiration.setMinutes(this.codeExpiration.getMinutes() + 5);
 
-    const emailsString = this.configService.get<string>('EMAIL_TO');
-    if (!emailsString) {
-      console.error('EMAIL_TO não configurado.');
-      throw new InternalServerErrorException(
-        'O e-mail de destino não está configurado.',
-      );
-    }
-
-    const destinationEmails = emailsString
-      .split(',')
-      .map((email) => email.trim());
-
     try {
       await this.resend.emails.send({
         from: 'onboarding@resend.dev',
-        to: destinationEmails,
+        to: email,
         subject: 'Seu Código de Acesso ao Sistema',
         html: `<p>Olá!</p><p>Seu código de acesso é: <strong>${code}</strong></p><p>Ele expira em 5 minutos.</p>`,
       });
-      console.log(
-        `E-mail com código de acesso enviado para ${destinationEmails.join(', ')}`,
-      );
-      return {
-        message: 'Um código de acesso foi enviado para o e-mail configurado.',
-      };
+      console.log(`E-mail com código de acesso enviado para ${email}`);
+      return { message: `Um código de acesso foi enviado para ${email}.` };
     } catch (error) {
       console.error('Erro ao enviar e-mail:', error);
       throw new InternalServerErrorException(
