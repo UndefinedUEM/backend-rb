@@ -8,6 +8,7 @@ import { PresenceListsModule } from './presence-lists/presence-lists.module';
 import { User } from './users/entities/user.entity';
 import { Scout } from './scouts/entities/scout.entity';
 import { PresenceList } from './presence-lists/entities/presence-list.entity';
+import { AccessCodeModule } from './access-code/access-code.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { PresenceList } from './presence-lists/entities/presence-list.entity';
     UsersModule,
     ScoutsModule,
     PresenceListsModule,
+    AccessCodeModule,
   ],
   controllers: [],
   providers: [],
