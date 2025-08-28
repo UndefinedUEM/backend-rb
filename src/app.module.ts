@@ -9,6 +9,8 @@ import { User } from './users/entities/user.entity';
 import { Scout } from './scouts/entities/scout.entity';
 import { PresenceList } from './presence-lists/entities/presence-list.entity';
 import { AccessCodeModule } from './access-code/access-code.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -45,7 +47,7 @@ import { AccessCodeModule } from './access-code/access-code.module';
     PresenceListsModule,
     AccessCodeModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
