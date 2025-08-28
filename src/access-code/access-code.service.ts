@@ -6,10 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Resend } from 'resend';
-
-export class VerifyCodeDto {
-  code: string;
-}
+import { VerifyCodeDto } from './dto/access-code.dto';
 
 @Injectable()
 export class AccessCodeService {

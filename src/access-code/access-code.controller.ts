@@ -1,5 +1,6 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { AccessCodeService, VerifyCodeDto } from './access-code.service';
+import { AccessCodeService } from './access-code.service';
+import { VerifyCodeDto } from './dto/access-code.dto';
 
 @Controller('access-code')
 export class AccessCodeController {
