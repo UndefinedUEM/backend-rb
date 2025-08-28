@@ -18,29 +18,24 @@ import { PresenceList } from './presence-lists/entities/presence-list.entity';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const databaseUrl = configService.get<string>(
-          'postgresql://banco_escoteiros_user:YkbxU9HI5Bt0FzJHDlw5R6ndLQXJaakB@dpg-d2o5n1ggjchc73f68ob0-a/banco_escoteiros',
-        );
-
-        console.log(
-          `[DEPURAÇÃO] Tentando conectar ao banco de dados com a URL: ${databaseUrl}`,
-        );
-
-        if (!databaseUrl) {
-          throw new Error(
-            'DATABASE_URL não foi encontrada nas variáveis de ambiente.',
-          );
+        if (configService.get<string>('NODE_ENV') === 'production') {
+          return {
+            type: 'postgres',
+            url: configService.get<string>('DATABASE_URL'),
+            entities: [User, Scout, PresenceList],
+            synchronize: true,
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          };
+        } else {
+          return {
+            type: 'sqlite',
+            database: 'db.sqlite',
+            entities: [User, Scout, PresenceList],
+            synchronize: true,
+          };
         }
-
-        return {
-          type: 'postgres',
-          url: databaseUrl,
-          entities: [User, Scout, PresenceList],
-          synchronize: true,
-          ssl: {
-            rejectUnauthorized: false,
-          },
-        };
       },
     }),
     AuthModule,
