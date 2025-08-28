@@ -17,17 +17,31 @@ import { PresenceList } from './presence-lists/entities/presence-list.entity';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        url: configService.get<string>(
+      useFactory: (configService: ConfigService) => {
+        const databaseUrl = configService.get<string>(
           'postgresql://banco_escoteiros_user:YkbxU9HI5Bt0FzJHDlw5R6ndLQXJaakB@dpg-d2o5n1ggjchc73f68ob0-a/banco_escoteiros',
-        ),
-        entities: [User, Scout, PresenceList],
-        synchronize: true,
-        ssl: {
-          rejectUnauthorized: false,
-        },
-      }),
+        );
+
+        console.log(
+          `[DEPURAÇÃO] Tentando conectar ao banco de dados com a URL: ${databaseUrl}`,
+        );
+
+        if (!databaseUrl) {
+          throw new Error(
+            'DATABASE_URL não foi encontrada nas variáveis de ambiente.',
+          );
+        }
+
+        return {
+          type: 'postgres',
+          url: databaseUrl,
+          entities: [User, Scout, PresenceList],
+          synchronize: true,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        };
+      },
     }),
     AuthModule,
     UsersModule,
