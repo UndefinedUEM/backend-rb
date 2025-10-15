@@ -1,4 +1,4 @@
-export enum BranchUnit {
+export enum Branch {
   AlcateiaJangal = 'Alcateia Jângal',
   AlcateiaFlorVermelha = 'Alcateia Flor Vermelha',
   AlcateiaLoboGuara = 'Alcateia Lobo Guará',
