@@ -1,6 +1,9 @@
 export enum Branch {
-  Lobinho = 'lobinho',
-  Escoteiro = 'escoteiro',
-  SeniorGuia = 'senior_guia',
-  Pioneiro = 'pioneiro',
+  AlcateiaJangal = 'Alcateia Jângal',
+  AlcateiaFlorVermelha = 'Alcateia Flor Vermelha',
+  AlcateiaLoboGuara = 'Alcateia Lobo Guará',
+  TropaEscoteiraEscorpiao = 'Tropa Escoteira Escorpião',
+  TropaEscoteiraFenix = 'Tropa Escoteira Fênix',
+  TropaSeniorKaingang = 'Tropa Sênior Kaingang',
+  ClaPioneiroAgniram = 'Clã Pioneiro Agniram',
 }
