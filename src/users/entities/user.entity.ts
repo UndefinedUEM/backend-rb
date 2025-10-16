@@ -1,10 +1,13 @@
-import { Branch } from 'src/common/enums/branch.enum';
-import { Role } from 'src/common/enums/role.enum';
-import { Entity, Column, CreateDateColumn, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class User {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
@@ -15,16 +18,6 @@ export class User {
 
   @Column()
   password: string;
-
-  @Column({
-    enum: Role,
-  })
-  role: Role;
-
-  @Column({
-    enum: Branch,
-  })
-  branch: Branch;
 
   @CreateDateColumn()
   createdAt: Date;
