@@ -11,8 +11,6 @@ import {
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { SignInDto } from './dto/sign-in.dto';
-import { User } from 'src/users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -25,13 +23,13 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  async signIn(@Body() signInDto: SignInDto) {
+  async signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('userData')
-  getProfile(@Request() req: { user: Omit<User, 'password'> }) {
+  getProfile(@Request() req) {
     return req.user;
   }
 }
