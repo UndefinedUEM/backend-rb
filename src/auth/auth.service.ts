@@ -30,8 +30,8 @@ export class AuthService {
     return result;
   }
 
-  async signIn(email: string, pass: string): Promise<{ access_token: string }> {
-    const user = await this.usersService.findOneByEmail(email);
+  async signIn(id: number, pass: string): Promise<{ access_token: string }> {
+    const user = await this.usersService.findOneById(id);
 
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas.');

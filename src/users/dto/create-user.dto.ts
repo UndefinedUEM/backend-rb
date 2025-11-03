@@ -1,6 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
+  @IsNumber()
+  @IsNotEmpty({ message: 'O id não pode ser vazio.' })
+  id: number;
+  
   @IsString()
   @IsNotEmpty({ message: 'O nome não pode ser vazio.' })
   name: string;
